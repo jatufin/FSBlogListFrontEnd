@@ -4,9 +4,23 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 
 const LOGGED_USER = 'loggedOnBlogsAppuser'
+const NOTIFICATION_TIMEOUT = 5000
+
+const Notification = ({message, type}) => {
+  if(!message) {
+    return null
+  }
+
+  return(
+    <div className={`notification ${type}`}>
+      {message}
+    </div>
+  )
+}
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -14,6 +28,9 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+
+  const [notification, setNotification] = useState('')
+  const [notificationType, setNotificationType] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -31,6 +48,16 @@ const App = () => {
     }
   }, [])
 
+  const showNotification = (message, type) => {
+    console.log('showNotif: ', message)
+    setNotification(message)
+    setNotificationType(type ? type : 'normal')
+
+    setTimeout(() => {
+      setNotification('')
+    }, NOTIFICATION_TIMEOUT)
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault()
 
@@ -46,8 +73,8 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
-    } catch(e) {
-      window.alert('Invalid credentials')
+    } catch(error) {
+      showNotification('wrong username or password', 'error')
     }
   } 
 
@@ -66,17 +93,30 @@ const App = () => {
       url
     }
 
-    const addedBlog = await blogService.create(blogObject)
+    try {
+      const addedBlog = await blogService.create(blogObject)
 
-    setBlogs(blogs.concat(addedBlog))
-    setTitle('')
-    setAuthor('')
-    setUrl('')
+      setBlogs(blogs.concat(addedBlog))
+      setTitle('')
+      setAuthor('')
+      setUrl('')
+
+      showNotification(
+        `a new blog ${addedBlog.title} by ${addedBlog.author} added`,
+        'normal'
+      )
+
+    } catch(error) {
+      showNotification(`Failed to add blog: ${error.message}`, 'error')
+    }
+
+    
   }
 
   const loginPage = () => (
     <div>
       <h2>log in to application</h2>
+      <Notification message={notification} type={notificationType}/>
       <form onSubmit={handleLogin}>
         <p><input
           type='text'
@@ -117,6 +157,7 @@ const App = () => {
   const blogsPage = () => (
     <div>
       <h2>blogs</h2>
+      <Notification message={notification} type={notificationType}/>
       <p>{user.name} logged in
       <button onClick={() => {handleLogout()}}>logout</button>
       </p>
