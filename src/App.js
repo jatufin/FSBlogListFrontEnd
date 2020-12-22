@@ -140,8 +140,8 @@ const App = () => {
         openButtonLabel='new note'
         closeButtonLabel='cancel'
       >
-      <h2>create new</h2>
-      <BlogForm addBlog={addBlog} />
+        <h2>create new</h2>
+        <BlogForm addBlog={addBlog} />
       </Togglable>
       
       {blogs.map(blog =>
