@@ -108,13 +108,31 @@ const App = () => {
   }
 
   const updateBlog = async (blogObject) => {
-    console.log("APP: updateBlog()")
     const updatedBlog = await blogService.update(blogObject)
 
     setBlogs(blogs.map(b =>
       b.id !== updatedBlog.id
         ? b
         : updatedBlog))
+  }
+
+  const removeBlog = async (blogObject) => {
+    if(!window.confirm(`remove ${blogObject.title} by ${blogObject.author}`)) {
+      return
+    }
+
+    try {
+      await blogService.remove(blogObject, user.token)
+
+      setBlogs(blogs.filter(b => b.id !== blogObject.id))
+
+      showNotification('blog removed')
+    } catch(error) {
+        showNotification(
+          `Failed to remove blog: ${error.message}`,
+          'error'
+      )
+    }
   }
 
   const loginPage = () => (
@@ -154,7 +172,11 @@ const App = () => {
         <BlogForm addBlog={addBlog} />
       </Togglable>
       
-      <Blogs blogs={blogs} updateBlog={updateBlog} />
+      <Blogs
+        blogs={blogs}
+        updateBlog={updateBlog}
+        removeBlog={removeBlog}
+        currentUser={user}/>
     </div>
   )
 

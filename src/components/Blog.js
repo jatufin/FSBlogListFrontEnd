@@ -1,10 +1,17 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog, update }) => {
+const Blog = ({ blog, update, remove, currentUser }) => {
   const [showDetails, setShowDetails] = useState(false)
 
   const hideWhenDetails = { display: showDetails ? 'none' : '' }
   const showWhenDetails = { display: showDetails ? '' : 'none' }
+
+  const showIfOwner = {
+    display: (currentUser.username === blog.user.username )
+      ? ''
+      : 'none'
+  }
+
 
   const toggleShowDetails = () => {
     setShowDetails(!showDetails)
@@ -27,9 +34,21 @@ const Blog = ({ blog, update }) => {
   )
 
   const handleLike = (event) => {
-    console.log('Like: ', blog)
     blog.likes = blog.likes ? blog.likes + 1 : 1
     update(blog)
+  }
+
+  const deleteButton = () => (
+    <button
+      onClick={handleDelete}
+      style={showIfOwner}
+    >
+      remove
+    </button>
+  )
+
+  const handleDelete = (event) => {
+    remove(blog)
   }
 
   return(
@@ -41,6 +60,8 @@ const Blog = ({ blog, update }) => {
       <p>{clickableTitle(blog.title)} {blog.author} {toggleButton('hide')}</p>
       <p>{blog.url}</p>
       <p>likes {blog.likes ? blog.likes : 0} {likeButton()}</p>
+      <p>{blog.user.username}</p>
+      <p>{deleteButton()}</p>
     </div>
   </div>
   )

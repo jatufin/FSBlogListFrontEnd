@@ -2,7 +2,7 @@ import React from 'react'
 
 import Blog from './Blog'
 
-const Blogs = ({ blogs, updateBlog }) => {
+const Blogs = ({ blogs, updateBlog, currentUser, removeBlog }) => {
   const blogSorter = (blogList) => {
     const listToSort = [...blogList]
     
@@ -14,7 +14,13 @@ const Blogs = ({ blogs, updateBlog }) => {
   return (
     <div>
       {blogSorter(blogs).map(blog =>
-        <Blog key={blog.id} blog={blog} update={updateBlog} />
+        <Blog
+          key={blog.id}
+          blog={blog}
+          update={updateBlog}
+          remove={removeBlog}
+          currentUser={currentUser}
+        />
       )}
     </div>
   )
