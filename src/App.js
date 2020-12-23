@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-import Blog from './components/Blog'
+import Blogs from './components/Blogs'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 
@@ -34,10 +34,10 @@ const App = () => {
 
   const blogFormRef = useRef()
 
-  useEffect(() => {
+  useEffect(() => { 
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -50,6 +50,8 @@ const App = () => {
     }
   }, [])
 
+  
+  
   const showNotification = (message, type) => {
     setNotification(message)
     setNotificationType(type ? type : 'normal')
@@ -106,6 +108,7 @@ const App = () => {
   }
 
   const updateBlog = async (blogObject) => {
+    console.log("APP: updateBlog()")
     const updatedBlog = await blogService.update(blogObject)
 
     setBlogs(blogs.map(b =>
@@ -151,9 +154,7 @@ const App = () => {
         <BlogForm addBlog={addBlog} />
       </Togglable>
       
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} update={updateBlog} />
-      )}
+      <Blogs blogs={blogs} updateBlog={updateBlog} />
     </div>
   )
 

@@ -27,7 +27,7 @@ const Blog = ({ blog, update }) => {
   )
 
   const handleLike = (event) => {
-    console.log('Like!')
+    console.log('Like: ', blog)
     blog.likes = blog.likes ? blog.likes + 1 : 1
     update(blog)
   }
