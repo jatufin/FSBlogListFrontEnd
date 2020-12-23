@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, update }) => {
   const [showDetails, setShowDetails] = useState(false)
 
   const hideWhenDetails = { display: showDetails ? 'none' : '' }
@@ -28,6 +28,8 @@ const Blog = ({ blog }) => {
 
   const handleLike = (event) => {
     console.log('Like!')
+    blog.likes = blog.likes ? blog.likes + 1 : 1
+    update(blog)
   }
 
   return(

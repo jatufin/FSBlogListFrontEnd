@@ -22,8 +22,25 @@ const create = async newObject => {
   return response.data
 }
 
+const update = async updatedObject => {
+  const url = `${baseUrl}/${updatedObject.id}`
+
+  const objectToSend = {
+    title: updatedObject.title,
+    author: updatedObject.author,
+    url: updatedObject.url,
+    likes: updatedObject.likes,
+    user: updatedObject.user
+  }
+
+  const response = await axios.put(url, objectToSend)
+
+  return response.data
+}
+
 export default {
   setToken,
   getAll,
-  create
+  create,
+  update
 }

@@ -102,9 +102,16 @@ const App = () => {
         `Failed to add blog: ${error.message}`,
         'error'
       )
-    }
+    }    
+  }
 
-    
+  const updateBlog = async (blogObject) => {
+    const updatedBlog = await blogService.update(blogObject)
+
+    setBlogs(blogs.map(b =>
+      b.id !== updatedBlog.id
+        ? b
+        : updatedBlog))
   }
 
   const loginPage = () => (
@@ -145,7 +152,7 @@ const App = () => {
       </Togglable>
       
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} update={updateBlog} />
       )}
     </div>
   )
