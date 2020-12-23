@@ -14,3 +14,11 @@
   padding: 10px;
   margin-bottom: 10px;
 }
+
+.blog {
+  padding-top: 10;
+  padding-left: 2;
+  border: solid;
+  border-width: 1;
+  margin-bottom: 5
+}
