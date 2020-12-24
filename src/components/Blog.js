@@ -18,7 +18,7 @@ const Blog = ({ blog, update, remove, currentUser }) => {
     setShowDetails(!showDetails)
   }
 
-  const toggleButton = (buttonLabel) => (    
+  const toggleButton = (buttonLabel) => (
     <button onClick={toggleShowDetails}>
       {buttonLabel}
     </button>
@@ -34,7 +34,7 @@ const Blog = ({ blog, update, remove, currentUser }) => {
     <button onClick={handleLike}>like</button>
   )
 
-  const handleLike = (event) => {
+  const handleLike = () => {
     blog.likes = blog.likes ? blog.likes + 1 : 1
     update(blog)
   }
@@ -48,23 +48,23 @@ const Blog = ({ blog, update, remove, currentUser }) => {
     </button>
   )
 
-  const handleDelete = (event) => {
+  const handleDelete = () => {
     remove(blog)
   }
 
   return(
-  <div>
-    <div style={hideWhenDetails} className='blog'>
-      <p>{clickableTitle(blog.title)} {blog.author} {toggleButton('view')}</p>
+    <div>
+      <div style={hideWhenDetails} className='blog'>
+        <p>{clickableTitle(blog.title)} {blog.author} {toggleButton('view')}</p>
+      </div>
+      <div style={showWhenDetails} className='blog'>
+        <p>{clickableTitle(blog.title)} {blog.author} {toggleButton('hide')}</p>
+        <p>{blog.url}</p>
+        <p>likes {blog.likes ? blog.likes : 0} {likeButton()}</p>
+        <p>{blog.user.username}</p>
+        <p>{deleteButton()}</p>
+      </div>
     </div>
-    <div style={showWhenDetails} className='blog'>
-      <p>{clickableTitle(blog.title)} {blog.author} {toggleButton('hide')}</p>
-      <p>{blog.url}</p>
-      <p>likes {blog.likes ? blog.likes : 0} {likeButton()}</p>
-      <p>{blog.user.username}</p>
-      <p>{deleteButton()}</p>
-    </div>
-  </div>
   )
 }
 

@@ -10,7 +10,7 @@ import loginService from './services/login'
 const LOGGED_USER = 'loggedOnBlogsAppuser'
 const NOTIFICATION_TIMEOUT = 5000
 
-const Notification = ({message, type}) => {
+const Notification = ({ message, type }) => {
   if(!message) {
     return null
   }
@@ -34,13 +34,13 @@ const App = () => {
 
   const blogFormRef = useRef()
 
-  useEffect(() => { 
+  useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )
   }, [])
 
-  useEffect(() => {
+  useEffect(() => {
     const userJSON = window.localStorage.getItem(LOGGED_USER)
 
     if(userJSON) {
@@ -50,8 +50,8 @@ const App = () => {
     }
   }, [])
 
-  
-  
+
+
   const showNotification = (message, type) => {
     setNotification(message)
     setNotificationType(type ? type : 'normal')
@@ -79,7 +79,7 @@ const App = () => {
     } catch(error) {
       showNotification('wrong username or password', 'error')
     }
-  } 
+  }
 
   const handleLogout = async () => {
     window.localStorage.clear()
@@ -104,7 +104,7 @@ const App = () => {
         `Failed to add blog: ${error.message}`,
         'error'
       )
-    }    
+    }
   }
 
   const updateBlog = async (blogObject) => {
@@ -128,9 +128,9 @@ const App = () => {
 
       showNotification('blog removed')
     } catch(error) {
-        showNotification(
-          `Failed to remove blog: ${error.message}`,
-          'error'
+      showNotification(
+        `Failed to remove blog: ${error.message}`,
+        'error'
       )
     }
   }
@@ -143,26 +143,26 @@ const App = () => {
         <p><input
           type='text'
           name='Username'
-          onChange={ ({target}) => setUsername(target.value)}
+          onChange={ ({ target }) => setUsername(target.value)}
         /></p>
         <p><input
           type='password'
           name='Password'
-          onChange={ ({target}) => setPassword(target.value)}
+          onChange={ ({ target }) => setPassword(target.value)}
         /></p>
         <button type='submit'>login</button>
       </form>
     </div>
   )
-  
+
   const blogsPage = () => (
     <div>
       <h2>blogs</h2>
       <Notification message={notification} type={notificationType}/>
       <p>{user.name} logged in
-      <button onClick={() => {handleLogout()}}>logout</button>
+        <button onClick={() => {handleLogout()}}>logout</button>
       </p>
-      
+
       <Togglable
         ref={blogFormRef}
         openButtonLabel='create new blog'
@@ -171,7 +171,7 @@ const App = () => {
         <h2>create new</h2>
         <BlogForm addBlog={addBlog} />
       </Togglable>
-      
+
       <Blogs
         blogs={blogs}
         updateBlog={updateBlog}
@@ -182,10 +182,10 @@ const App = () => {
 
   return (
     <div>
-    { user === null
-      ? loginPage()
-      : blogsPage()
-    }
+      { user === null
+        ? loginPage()
+        : blogsPage()
+      }
     </div>
   )
 }
