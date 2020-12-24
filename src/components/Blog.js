@@ -61,7 +61,7 @@ const Blog = ({ blog, update, remove, currentUser }) => {
         <p>{clickableTitle(blog.title)} {blog.author} {toggleButton('hide')}</p>
         <p>{blog.url}</p>
         <p>likes {blog.likes ? blog.likes : 0} {likeButton()}</p>
-        <p>{blog.user.username}</p>
+        <p>{blog.user.name}</p>
         <p>{deleteButton()}</p>
       </div>
     </div>
