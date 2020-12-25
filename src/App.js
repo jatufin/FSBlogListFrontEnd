@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Blogs from './components/Blogs'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
+import Notification from './components/Notification'
 
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -10,17 +11,6 @@ import loginService from './services/login'
 const LOGGED_USER = 'loggedOnBlogsAppuser'
 const NOTIFICATION_TIMEOUT = 5000
 
-const Notification = ({ message, type }) => {
-  if(!message) {
-    return null
-  }
-
-  return(
-    <div className={`notification ${type}`}>
-      {message}
-    </div>
-  )
-}
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
