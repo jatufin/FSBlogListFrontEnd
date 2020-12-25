@@ -23,7 +23,7 @@ const Blog = ({ blog, update, remove, currentUser }) => {
   }
 
   const toggleButton = (buttonLabel) => (
-    <button onClick={toggleShowDetails}>
+    <button id='toggle-blog-view' onClick={toggleShowDetails}>
       {buttonLabel}
     </button>
   )
