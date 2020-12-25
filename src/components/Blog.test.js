@@ -6,6 +6,7 @@ import Blog from './Blog'
 describe('<Blog />', () => {
   const VIEW_BUTTON_TEXT = 'view'
   const HIDE_BUTTON_TEXT = 'hide'
+  const LIKE_BUTTON_TEXT = 'like'
 
   const testBlog = {
     title: 'Test Title',
@@ -68,5 +69,15 @@ describe('<Blog />', () => {
     expect(divs[1]).not.toHaveStyle('display: none')
     expect(divs[1].outerHTML).toMatch(testBlog.url)
     expect(divs[1].outerHTML).toMatch(testBlog.likes.toString())
+  })
+
+  test('two clicks of like button are handled twice', () => {
+    const button = component.getByText(LIKE_BUTTON_TEXT)
+
+    fireEvent.click(button)
+    fireEvent.click(button)
+
+    expect(mockUpdate.mock.calls).toHaveLength(2)
+
   })
 })

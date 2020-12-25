@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 const Blog = ({ blog, update, remove, currentUser }) => {
+  const VIEW_BUTTON_TEXT = 'view'
+  const HIDE_BUTTON_TEXT = 'hide'
+  const LIKE_BUTTON_TEXT = 'like'
+
   const [showDetails, setShowDetails] = useState(false)
 
   const hideWhenDetails = { display: showDetails ? 'none' : '' }
@@ -31,7 +35,7 @@ const Blog = ({ blog, update, remove, currentUser }) => {
   )
 
   const likeButton = () => (
-    <button onClick={handleLike}>like</button>
+    <button onClick={handleLike}>{LIKE_BUTTON_TEXT}</button>
   )
 
   const handleLike = () => {
@@ -55,10 +59,10 @@ const Blog = ({ blog, update, remove, currentUser }) => {
   return(
     <div>
       <div style={hideWhenDetails} className='blog'>
-        <p>{clickableTitle(blog.title)} {blog.author} {toggleButton('view')}</p>
+        <p>{clickableTitle(blog.title)} {blog.author} {toggleButton(VIEW_BUTTON_TEXT)}</p>
       </div>
       <div style={showWhenDetails} className='blog'>
-        <p>{clickableTitle(blog.title)} {blog.author} {toggleButton('hide')}</p>
+        <p>{clickableTitle(blog.title)} {blog.author} {toggleButton(HIDE_BUTTON_TEXT)}</p>
         <p>{blog.url}</p>
         <p>likes {blog.likes ? blog.likes : 0} {likeButton()}</p>
         <p>{blog.user.name}</p>
