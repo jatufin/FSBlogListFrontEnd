@@ -5,7 +5,7 @@ import Blog from './Blog'
 
 describe('<Blog />', () => {
   const VIEW_BUTTON_TEXT = 'view'
-  const HIDE_BUTTON_TEXT = 'hide'
+  // const HIDE_BUTTON_TEXT = 'hide'
   const LIKE_BUTTON_TEXT = 'like'
 
   const testBlog = {
@@ -23,9 +23,11 @@ describe('<Blog />', () => {
     username: 'testuser'
   }
 
+  /*
   const testUserIsNotOwner = {
     username: 'otheruser'
   }
+  */
 
   const mockUpdate = jest.fn()
   const mockRemove = jest.fn()
