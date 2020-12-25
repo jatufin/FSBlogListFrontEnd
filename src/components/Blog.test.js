@@ -4,6 +4,9 @@ import '@testing-library/jest-dom/extend-expect'
 import Blog from './Blog'
 
 describe('<Blog />', () => {
+  const VIEW_BUTTON_TEXT = 'view'
+  const HIDE_BUTTON_TEXT = 'hide'
+
   const testBlog = {
     title: 'Test Title',
     author: 'Test Author',
@@ -40,7 +43,7 @@ describe('<Blog />', () => {
   })
 
   test('initially only title and author are shown', () => {
-    let divs = component.container.querySelectorAll('.blog')
+    const divs = component.container.querySelectorAll('.blog')
 
     expect(divs).toHaveLength(2)
 
@@ -51,5 +54,19 @@ describe('<Blog />', () => {
     expect(divs[0].outerHTML).not.toMatch(testBlog.likes.toString())
 
     expect(divs[1]).toHaveStyle('display: none')
+  })
+
+  test('url and likes are shown after view button is clicked', () => {
+    const button = component.getByText(VIEW_BUTTON_TEXT)
+    fireEvent.click(button)
+
+    const divs = component.container.querySelectorAll('.blog')
+
+    expect(divs).toHaveLength(2)
+
+    expect(divs[0]).toHaveStyle('display: none')
+    expect(divs[1]).not.toHaveStyle('display: none')
+    expect(divs[1].outerHTML).toMatch(testBlog.url)
+    expect(divs[1].outerHTML).toMatch(testBlog.likes.toString())
   })
 })
