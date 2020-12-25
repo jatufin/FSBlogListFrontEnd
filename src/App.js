@@ -141,16 +141,16 @@ const App = () => {
       <Notification message={notification} type={notificationType}/>
       <form onSubmit={handleLogin}>
         <p><input
+          id='username'
           type='text'
-          name='Username'
           onChange={ ({ target }) => setUsername(target.value)}
         /></p>
         <p><input
+          id='password'
           type='password'
-          name='Password'
           onChange={ ({ target }) => setPassword(target.value)}
         /></p>
-        <button type='submit'>login</button>
+        <button id='login-button' type='submit'>login</button>
       </form>
     </div>
   )
