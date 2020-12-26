@@ -5,6 +5,12 @@ describe('Blog app', function() {
     password: 'password1'
   }
 
+  const testUser2 = {
+    username: 'testuser2',
+    name: 'User Name2',
+    password: 'password2'
+  }
+
   const testBlog1 = {
     title: 'Test Title1',
     author: 'Test Author1',
@@ -14,6 +20,7 @@ describe('Blog app', function() {
   beforeEach(function() {
     cy.request('POST', 'http://localhost:3001/api/testing/reset')
     cy.request('POST', 'http://localhost:3001/api/users', testUser1)
+    cy.request('POST', 'http://localhost:3001/api/users', testUser2)
     cy.visit('http://localhost:3000')
   })
 
@@ -79,6 +86,40 @@ describe('Blog app', function() {
       cy.contains('likes 0')
       cy.contains('like').click()
       cy.contains('likes 1')
+    })
+
+    it('A blog can be removed', function() {
+      cy.contains('create new blog').click()
+
+      cy.get('#title').type(testBlog1.title)
+      cy.get('#author').type(testBlog1.author)
+      cy.get('#url').type(testBlog1.url)
+      cy.get('#blog-submit').click()
+
+      cy.contains('view').click()
+      cy.contains('remove').click()
+      cy.on('window:confirm', () => true)
+
+      cy.get('.notification').contains('blog removed')
+      cy.contains(`${testBlog1.title} ${testBlog1.author}`).should('not.exist')
+    })
+
+    it('A blog from another user can not be removed', function() {
+      cy.contains('create new blog').click()
+
+      cy.get('#title').type(testBlog1.title)
+      cy.get('#author').type(testBlog1.author)
+      cy.get('#url').type(testBlog1.url)
+      cy.get('#blog-submit').click()
+
+      cy.get('#logout-button').click()
+      cy.get('#username').type(testUser2.username)
+      cy.get('#password').type(testUser2.password)
+      cy.get('#login-button').click()
+
+      cy.contains('view').click()
+      cy.contains(`${testBlog1.title} ${testBlog1.author}`)
+      cy.contains('remove').should('not.be.visible')
     })
   })
 })
