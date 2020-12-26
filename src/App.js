@@ -103,6 +103,10 @@ const App = () => {
 
   const updateBlog = async (blogObject) => {
     const updatedBlog = await blogService.update(blogObject)
+    updatedBlog.user = {
+      username: blogObject.user.username,
+      name: blogObject.user.name
+    }
 
     setBlogs(blogs.map(b =>
       b.id !== updatedBlog.id
