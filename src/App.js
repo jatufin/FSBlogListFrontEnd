@@ -82,6 +82,10 @@ const App = () => {
 
     try {
       const addedBlog = await blogService.create(blogObject)
+      addedBlog.user = {
+        username: user.username,
+        name: user.name
+      }
 
       setBlogs(blogs.concat(addedBlog))
 
