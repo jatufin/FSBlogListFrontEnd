@@ -58,10 +58,10 @@ const Blog = ({ blog, update, remove, currentUser }) => {
 
   return(
     <div>
-      <div style={hideWhenDetails} className='blog'>
+      <div style={hideWhenDetails} className='blog blogheader'>
         <p>{clickableTitle(blog.title)} {blog.author} {toggleButton(VIEW_BUTTON_TEXT)}</p>
       </div>
-      <div style={showWhenDetails} className='blog'>
+      <div style={showWhenDetails} className='blog blogdetails'>
         <p>{clickableTitle(blog.title)} {blog.author} {toggleButton(HIDE_BUTTON_TEXT)}</p>
         <p>{blog.url}</p>
         <p>likes {blog.likes ? blog.likes : 0} {likeButton()}</p>

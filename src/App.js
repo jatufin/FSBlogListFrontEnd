@@ -1,3 +1,5 @@
+import Config from './config'
+
 import React, { useState, useEffect, useRef } from 'react'
 
 import Blogs from './components/Blogs'
@@ -7,10 +9,6 @@ import Notification from './components/Notification'
 
 import blogService from './services/blogs'
 import loginService from './services/login'
-
-const LOGGED_USER = 'loggedOnBlogsAppuser'
-const NOTIFICATION_TIMEOUT = 5000
-
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -31,7 +29,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    const userJSON = window.localStorage.getItem(LOGGED_USER)
+    const userJSON = window.localStorage.getItem(Config.STORAGE_KEY)
 
     if(userJSON) {
       const user = JSON.parse(userJSON)
@@ -48,7 +46,7 @@ const App = () => {
 
     setTimeout(() => {
       setNotification('')
-    }, NOTIFICATION_TIMEOUT)
+    }, Config.NOTIFICATION_TIMEOUT)
   }
 
   const handleLogin = async (event) => {
@@ -56,9 +54,10 @@ const App = () => {
 
     try {
       const user = await loginService.login({ username, password })
+      console.log('Talletaan avaimella', Config.STORAGE_KEY)
 
       window.localStorage.setItem(
-        LOGGED_USER,
+        Config.STORAGE_KEY,
         JSON.stringify(user)
       )
 
